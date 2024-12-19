@@ -36,9 +36,9 @@ class ProductController {
 
     // Создать новый продукт
     async create(req, res) {
-        const { name, category, stock, retailPrice, wholesalePrice, weight, country, description, imageLink } = req.body;
+        const { name, category, stock, priceVariants, country, description, imageLink } = req.body;
         try {
-            const product = await Product.create({ name, category, stock, retailPrice, wholesalePrice, weight, country, description, imageLink });
+            const product = await Product.create({ name, category, stock, priceVariants, country, description, imageLink });
             res.status(201).json(product);
         } catch (err) {
             res.status(500).json({ message: 'Ошибка при создании продукта', error: err.message });
@@ -48,11 +48,11 @@ class ProductController {
     // Обновить продукт
     async update(req, res) {
         const { id } = req.params;
-        const { name, category, stock, retailPrice, wholesalePrice, weight, country, description, imageLink } = req.body;
+        const { name, category, stock, priceVariants, country, description, imageLink } = req.body;
         try {
             const product = await Product.findByPk(id);
             if (!product) return res.status(404).json({ message: 'Продукт не найден' });
-            await product.update({ name, category, stock, retailPrice, wholesalePrice, weight, country, description, imageLink });
+            await product.update({ name, category, stock, priceVariants, country, description, imageLink });
             res.json(product);
         } catch (err) {
             res.status(500).json({ message: 'Ошибка при обновлении продукта', error: err.message });

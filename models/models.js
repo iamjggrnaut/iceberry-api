@@ -7,12 +7,13 @@ const Product = sequelize.define('product', {
     name: { type: DataTypes.STRING, allowNull: false },
     category: { type: DataTypes.STRING, allowNull: false },
     stock: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }, // Количество на складе
-    retailPrice: { type: DataTypes.FLOAT, allowNull: false },
-    wholesalePrice: { type: DataTypes.FLOAT, allowNull: false },
-    weight: { type: DataTypes.FLOAT, allowNull: false },
+    priceVariants: {
+        type: DataTypes.JSON, // Хранение ценовых вариантов в формате JSON
+        allowNull: true
+    },
     country: { type: DataTypes.STRING, allowNull: true },
     description: { type: DataTypes.TEXT, allowNull: true },
-    imageLink: { type: DataTypes.STRING, allowNull: false }, // URL изображения
+    imageLink: { type: DataTypes.TEXT, allowNull: true, defaultValue: 'https://images.unsplash.com/photo-1487646709898-58d3c6e8d886?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }, // URL изображения
     isActive: { type: DataTypes.BOOLEAN, defaultValue: true }, // Активен/неактивен
 });
 
