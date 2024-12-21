@@ -13,7 +13,7 @@ class AdminController {
             const isPasswordValid = await bcrypt.compare(password, admin.password);
             if (!isPasswordValid) return res.status(401).json({ message: 'Неверный пароль' });
 
-            const token = jwt.sign({ id: admin.id, role: admin.role }, process.env.SECRET_KEY, { expiresIn: '24h' });
+            const token = jwt.sign({ id: admin.id, role: admin.role }, process.env.SECRET_KEY, { expiresIn: '10000h' });
             res.json({ token });
         } catch (err) {
             res.status(500).json({ message: 'Ошибка при авторизации', error: err.message });
