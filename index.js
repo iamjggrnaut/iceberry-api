@@ -12,13 +12,38 @@ if (cluster.isMaster) {
     const express = require('express');
     const sequelize = require('./config/db');
     const PORT = process.env.PORT || 5000;
+
+    const fs = require('fs').promises
+
+    const multer = require('multer')
+    const upload = multer({ dest: './statics/' })
+
     const cors = require('cors');
     const router = require('./routes/index');
 
     const app = express();
 
-    app.use('/static', express.static('static'));
+    app.use('/statics', express.static('statics'));
     app.use(cors());
+
+    app.post('/api/uploadFile', upload.single('static'), async (req, res) => {
+        try {
+            const fileType = req.file.mimetype.split('/')[1];
+            console.log(fileType);
+            if (!fileType) {
+                return res.status(400).send('Не удалось получить расширение файла');
+            }
+            const newName = req.file.filename + '.' + fileType;
+            console.log(newName);
+
+            await fs.rename('./statics/' + req.file.filename, './statics/' + newName);
+            res.send(newName);
+        } catch (err) {
+            console.log(err)
+            res.status(500).send('Ошибка переименования файла');
+        }
+    });
+
     app.use(express.json());
     app.use('/api', router);
 
