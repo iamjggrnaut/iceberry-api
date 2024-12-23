@@ -23,6 +23,8 @@ if (cluster.isMaster) {
 
     const app = express();
 
+    const path = require('path');
+
     app.use(cors());
     app.use('/statics', express.static('statics'));
 
@@ -35,8 +37,9 @@ if (cluster.isMaster) {
             }
             const newName = req.file.filename + '.' + fileType;
             console.log(newName);
+            const filePath = path.join(__dirname, 'statics', newName);
 
-            await fs.rename('./statics/' + req.file.filename, './statics/' + newName);
+            await fs.rename('./statics/' + req.file.filename, filePath);
             res.send(newName);
         } catch (err) {
             console.log(err)
