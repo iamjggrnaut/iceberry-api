@@ -12,6 +12,7 @@ if (cluster.isMaster) {
     const express = require('express');
     const sequelize = require('./config/db');
     const PORT = process.env.PORT || 5000;
+    path = require('path')
 
     const fs = require('fs').promises
 
@@ -23,8 +24,8 @@ if (cluster.isMaster) {
 
     const app = express();
 
-    app.use('/statics', express.static('statics'));
     app.use(cors());
+    app.use('/statics', express.static(path.join(__dirname, 'statics')));
 
     app.post('/api/uploadFile', upload.single('static'), async (req, res) => {
         try {
