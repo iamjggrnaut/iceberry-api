@@ -47,32 +47,30 @@ class ProductController {
 
     // Обновить продукт
     async update(req, res) {
-
         const { id } = req.params;
         const { name, priceVariants, country, description, imageLink } = req.body;
+
         try {
-            const product = await Product.findByPk(id);
-            if (!product) return res.status(404).json({ message: 'Продукт не найден' });
-            if (imageLink) {
-                await product.update({ imageLink })
-                return res.json(product);
+            const product = await Product.findOne({ where: { id } });
+
+            if (!product) {
+                return res.status(404).json({ message: 'Продукт не найден' });
             }
-            await product.update({ name, priceVariants, country, description });
+
+            // Всегда обновляем все поля, если они присутствуют
+            await product.update({
+                name,
+                priceVariants,
+                country,
+                description,
+                imageLink
+            });
+
+
             res.json(product);
         } catch (err) {
             res.status(500).json({ message: 'Ошибка при обновлении продукта', error: err.message });
         }
-
-        // const { id } = req.params;
-        // const { name, category, stock, priceVariants, country, description, imageLink } = req.body;
-        // try {
-        //     const product = await Product.findByPk(id);
-        //     if (!product) return res.status(404).json({ message: 'Продукт не найден' });
-        //     await product.update({ name, category, stock, priceVariants, country, description, imageLink });
-        //     res.json(product);
-        // } catch (err) {
-        //     res.status(500).json({ message: 'Ошибка при обновлении продукта', error: err.message });
-        // }
     }
 
     // Удалить продукт
