@@ -9,7 +9,7 @@ router.get("/:id", orderController.getOne); // Только для админа
 router.delete(
   "/delete/order/:id",
   CheckRoleMiddleware("ADMIN"),
-  orderController.getOne
+  orderController.delete
 ); // Только для админа
 router.put("/:id/payment", orderController.updatePaymentStatus);
 

@@ -74,15 +74,14 @@ class OrderController {
   async delete(req, res) {
     const { id } = req.params;
     try {
-      const order = await Order.destroy({ where: { id } });
-      if (!order) return res.status(404).json({ message: "Заказ не найден" });
-
-      res.json(order);
+      const order = await Order.findByPk(id);
+      if (!order) return res.status(404).json({ message: "Продукт не найден" });
+      await order.destroy();
+      res.json({ message: "Продукт успешно удалён" });
     } catch (err) {
-      res.status(500).json({
-        message: "Ошибка при обновлении статуса оплаты",
-        error: err.message,
-      });
+      res
+        .status(500)
+        .json({ message: "Ошибка при удалении продукта", error: err.message });
     }
   }
 }
