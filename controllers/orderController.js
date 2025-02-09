@@ -77,7 +77,6 @@ class OrderController {
       const order = await Order.destroy({ where: { id } });
       if (!order) return res.status(404).json({ message: "Заказ не найден" });
 
-      await order.destroy();
       res.json(order);
     } catch (err) {
       res.status(500).json({
