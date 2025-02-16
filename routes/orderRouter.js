@@ -11,6 +11,6 @@ router.delete(
   CheckRoleMiddleware("ADMIN"),
   orderController.delete
 ); // Только для админа
-router.put("/:id/payment", orderController.updatePaymentStatus);
+router.put("/:id/payment", CheckRoleMiddleware("ADMIN"),  orderController.updatePaymentStatus);
 
 module.exports = router;
