@@ -53,8 +53,7 @@ class OrderController {
         from: "iceberryshop@internet.ru",
         // to: "iceberryshop@mail.ru",
         to: "rustam.tahamtan@gmail.com",
-        subject: "Подтверждение регистрации",
-        text: "Данное письмо отправлено сервисом «Radar Analytica».",
+        subject: "Новый заказ",
         html: `<div style="padding: 1rem; background-color: white; width: 100%; ">
             <div style="padding: 1rem; max-width: 560px; ">
                 <img src="cid:unique-image-id" alt="Изображение" style="width: 200px;">
@@ -65,7 +64,10 @@ class OrderController {
                 <a href="https://iceberryshop.ru/admin">Панель администратора</a>
             </div>
         </div>`,
+      }).catch(err => {
+        console.error("Ошибка при отправке письма:", err);
       });
+      console.log("Письмо отправлено:", result);
 
       res.status(201).json(order);
     } catch (err) {
