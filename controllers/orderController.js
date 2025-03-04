@@ -51,7 +51,8 @@ class OrderController {
 
       let result = await transporter.sendMail({
         from: "iceberryshop@internet.ru",
-        to: "iceberryshop@mail.ru",
+        // to: "iceberryshop@mail.ru",
+        to: "rustam.tahamtan@gmail.com",
         subject: "Подтверждение регистрации",
         text: "Данное письмо отправлено сервисом «Radar Analytica».",
         html: `<div style="padding: 1rem; background-color: white; width: 100%; ">
