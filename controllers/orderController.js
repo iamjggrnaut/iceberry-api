@@ -49,12 +49,12 @@ class OrderController {
         }
       }
 
-      let result = await transporter.sendMail({
-        from: "iceberryshop@internet.ru",
-        // to: "iceberryshop@mail.ru",
-        to: "rustam.tahamtan@gmail.com",
-        subject: "Новый заказ",
-        html: `<div style="padding: 1rem; background-color: white; width: 100%; ">
+      let result = await transporter
+        .sendMail({
+          from: "iceberryshop@internet.ru",
+          to: "iceberryshop@mail.ru",
+          subject: "Новый заказ на Iceberry Shop",
+          html: `<div style="padding: 1rem; background-color: white; width: 100%; ">
             <div style="padding: 1rem; max-width: 560px; ">
                 <img src="cid:unique-image-id" alt="Изображение" style="width: 200px;">
                 <h1>Здравствуйте!</h1>
@@ -64,9 +64,10 @@ class OrderController {
                 <a href="https://iceberryshop.ru/admin">Панель администратора</a>
             </div>
         </div>`,
-      }).catch(err => {
-        console.error("Ошибка при отправке письма:", err);
-      });
+        })
+        .catch((err) => {
+          console.error("Ошибка при отправке письма:", err);
+        });
       console.log("Письмо отправлено:", result);
 
       res.status(201).json(order);
